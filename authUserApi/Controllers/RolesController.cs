@@ -41,7 +41,12 @@ namespace authUserApi.Controllers
 
             catch (Exception e)
             {
-                return StatusCode(400, new { message = e.Message });
+                if (e.Message.Contains ("Could not save changes. Please configure your entity type accordingly."))
+                {
+                    return StatusCode(400, new { message = "Ilyen szerepkör már van!"});
+                }
+
+                return StatusCode(500, new { message = "Szerver oldali hiba!" });
             }
 
 
